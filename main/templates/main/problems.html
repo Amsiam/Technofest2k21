@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% for p in problem %}
+<div class="m-2">
+    <div class="d-grid">
+    <button class="btn btn-block {% if p in solvedlist %}btn-success{% else %}btn-outline-secondary {% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{p.id}}" aria-expanded="false" aria-controls="collapse{{p.id}}">
+      <div class="float-start">{{p.question}}</div> <div class="float-end">{{p.point}}</div>
+    </button>
+</div>
+    <div class="collapse" id="collapse{{p.id}}">
+        <div class="card card-body">
+            <div class="desc">
+                {{p.question_description|safe}}
+            </div>
+            {% if p not in solvedlist %}
+            <div class="form pt-5">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="ans" id="">
+                    <input type="hidden" name="pId" value="{{p.id}}">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,71 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>TechnoFest</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">T3chn0F3st7</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/' %}active{%endif%}" aria-current="page" href="/">Home</a>
+              </li>
+              {% if  request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/problems' %}active{%endif%} " href="/problems">Problems</a>
+              </li>{% endif %}
+
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/rank' %}active{%endif%}" href="/rank">Rank List</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              {% if not request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/login' %}active{%endif%}" href="/login">Login</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container py-5">
+        {% for message in messages %}
+        <div id="messages" class="alert {{ message.tags }} alert-dismissible" role="alert">
+            {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        
+          
+        </div>
+      {% endfor %}
+        {% block body %} {% endblock %}
+      </div>
+            
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#messages").hide();
+                $("#messages").fadeTo(2000, 500).slideUp(500, function() {
+                $("#messages").slideUp(500);
+            });
+        });
+        
+    </script>
+</body>
+</html>

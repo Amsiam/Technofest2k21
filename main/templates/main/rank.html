@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>Serial No</th>
+            <th>Name</th>
+            <th>Points</th>
+        </tr>
+        {% for rank in userrank %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{rank.user.username}}</td>
+            <td>{{rank.total_point}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+  </div>
+  
+
+{% endblock %}
